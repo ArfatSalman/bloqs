@@ -150,7 +150,6 @@ celerybeat.pid
 # Environments
 .env
 .venv
-bloqs/
 env/
 venv/
 ENV/
