@@ -200,7 +200,7 @@ def RV(v_x, v_y, v_z):
     return inner
 
 def R(theta, phi):
-    U3Gate = defns["UGate"]
+    U3Gate = defns["UGate"].get_constructor()
     return U3Gate(theta, phi - numpy.pi / 2, -phi + numpy.pi / 2)
 
 defns = {
