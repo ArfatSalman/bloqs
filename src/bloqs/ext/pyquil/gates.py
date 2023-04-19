@@ -85,23 +85,23 @@ def SX():
     return sqrt_x_definition
 
 
-def DCX():
-    mat = numpy.array([[1, 0, 0, 0], [0, 0, 0, 1], [0, 1, 0, 0], [0, 0, 1, 0]])
-    return DefGate("DCX", mat)
+def DCX(a, b):
+    p = Program()
+    p += CNOT(a, b)
+    p += CNOT(b, a)
+    return p
 
 
-def Sdg():
-    mat = numpy.array([[1, 0], [0, -1j]])
-    return DefGate("Sdg", mat)
+def Sdg(a):
+    return S(a).dagger()
+
 
 def CSdg(a, b):
-    sx_gate = defns["Sdg"].get_constructor()
-    return sx_gate(b).controlled(a)
+    return Sdg(b).controlled(a)
 
 
-def Tdg():
-    mat = numpy.array([[1, 0], [0, (1 - 1j) / numpy.sqrt(2)]])
-    return DefGate("Tdg", mat)
+def Tdg(a):
+    return T(a).dagger()
 
 
 def RXX():
@@ -194,14 +194,18 @@ def RC3X():
     )
     return DefGate("RC3X", mat)
 
+
 def RV(v_x, v_y, v_z):
     def inner(v_x, v_y, v_z):
         raise NotImplementedError("RV is not yet implemented")
+
     return inner
+
 
 def R(theta, phi):
     U3Gate = defns["UGate"].get_constructor()
     return U3Gate(theta, phi - numpy.pi / 2, -phi + numpy.pi / 2)
+
 
 defns = {
     "UGate": U(),
@@ -209,9 +213,6 @@ defns = {
     "CSXGate": SX(),
     "ECRGate": ECR(),
     "U2Gate": U(theta=numpy.pi / 2, name="U2"),
-    "DCXGate": DCX(),
-    "SdgGate": Sdg(),
-    "TdgGate": Tdg(),
     "RXXGate": RXX(),
     "RYYGate": RYY(),
     "RZZGate": RZZ(),
@@ -219,7 +220,6 @@ defns = {
     "RCCXGate": RCCX(),
     "RC3XGate": RC3X(),
 }
-
 
 
 def CU3(theta, phi, lam, c, t):
@@ -268,11 +268,6 @@ def get_custom_get_definitions(*args):
         res.append(defns["UGate"])
         args.difference_update(u_group)
 
-    sdg_group = {"SdgGate", "CSdgGate"}
-    if len(set.intersection(sdg_group, args)) > 0:
-        res.append(defns["SdgGate"])
-        args.difference_update(sdg_group)
-
     for gate in args:
         if defns.get(gate):
             res.append(defns.get(gate))
@@ -298,7 +293,7 @@ implementations = {
     "CXGate": CNOT,
     "CYGate": CY,
     "CZGate": CZ,
-    "DCXGate": defns["DCXGate"].get_constructor(),
+    "DCXGate": DCX,
     "ECRGate": defns["ECRGate"].get_constructor(),
     "HGate": H,
     "IGate": I,
@@ -317,11 +312,11 @@ implementations = {
     "SGate": S,
     "SXGate": defns["SXGate"].get_constructor(),
     "SXdgGate": SXdgGate,
-    "SdgGate": defns["SdgGate"].get_constructor(),
+    "SdgGate": Sdg,
     "CSdgGate": CSdg,
     "SwapGate": SWAP,
     "TGate": T,
-    "TdgGate": defns["TdgGate"].get_constructor(),
+    "TdgGate": Tdg,
     "U1Gate": PHASE,
     "U2Gate": defns["U2Gate"].get_constructor(),
     "U3Gate": defns["UGate"].get_constructor(),

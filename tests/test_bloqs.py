@@ -11,7 +11,7 @@ from qiskit_aer import Aer
 
 from bloqs.common.QuantumGate import all_gates
 from bloqs.ext.cirq import CirqGates
-from bloqs.ext.pyquil import PyQuilGates
+from bloqs.ext.pyquil import PyQuilGates, get_custom_get_definitions
 
 
 def qiskit_unitary(gate_name, qubit_size, param_args, *, reversed_bits=True):
@@ -45,6 +45,11 @@ def cirq_unitary_using_bloqs(gate_name, qubit_size, param_args):
 
 def pyquil_unitary_using_bloqs(gate_name, qubit_size, param_args):
     qc = Program()
+
+    custom_gate_defn = get_custom_get_definitions(gate_name)
+    if custom_gate_defn:
+        qc += custom_gate_defn
+
     if param_args:
         if gate_name in [
             "RYYGate",
@@ -94,11 +99,7 @@ pyquil_skipped_gates = [
     "RC3XGate",
     "ECRGate",
     "CU3Gate",
-    "CSdgGate",
     "SXdgGate",
-    "SdgGate",
-    "DCXGate",
-    "TdgGate",
     "CSXGate",
     "RCCXGate",
     "RZXGate",
