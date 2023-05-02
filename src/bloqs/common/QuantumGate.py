@@ -39,6 +39,7 @@ all_gates = {
     # "XXMinusYYGate",
     "ECRGate",
     "SGate",
+    "CSGate",
     "SdgGate",
     "CSdgGate",
     "SwapGate",

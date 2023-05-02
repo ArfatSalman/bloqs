@@ -56,6 +56,9 @@ def CRZ(angle, a, b):
 def CY(a, b):
     return Y(b).controlled(a)
 
+def CS(a, b):
+    return S(b).controlled(a)
+
 
 def ECR():
     part_mat = numpy.array(
@@ -310,6 +313,7 @@ implementations = {
     "RZXGate": defns["RZXGate"].get_constructor(),
     "RZZGate": defns["RZZGate"].get_constructor(),
     "SGate": S,
+    "CSGate": CS,
     "SXGate": defns["SXGate"].get_constructor(),
     "SXdgGate": SXdgGate,
     "SdgGate": Sdg,

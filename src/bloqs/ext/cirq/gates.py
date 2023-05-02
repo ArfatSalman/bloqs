@@ -575,6 +575,7 @@ implementations = {
     "TGate": cirq.T,
     "TdgGate": cirq.T ** (-1),
     "SGate": cirq.S,
+    "CSGate": cirq.ControlledGate(cirq.S, num_controls=1),
     "SdgGate": cirq.S ** (-1),
     "HGate": cirq.H,
     "CHGate": cirq.ControlledGate(cirq.H, num_controls=1),
