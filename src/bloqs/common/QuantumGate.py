@@ -6,6 +6,7 @@ all_gates = {
     "C3SXGate",
     "C4XGate",
     "CCXGate",
+    "CCZGate",
     "DCXGate",
     "CHGate",
     "CPhaseGate",

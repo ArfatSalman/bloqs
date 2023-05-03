@@ -106,6 +106,8 @@ def CSdg(a, b):
 def Tdg(a):
     return T(a).dagger()
 
+def CCZ(a, b, c):
+    return Z(a).controlled(b).controlled(c)
 
 def RXX():
     theta = Parameter("theta")
@@ -283,6 +285,7 @@ implementations = {
     "C3XGate": C3X,
     "C4XGate": C4X,
     "CCXGate": CCNOT,
+    "CCZGate": CCZ,
     "CHGate": CH,
     "CPhaseGate": CPHASE,
     "CRXGate": CRX,

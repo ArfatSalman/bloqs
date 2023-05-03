@@ -582,6 +582,7 @@ implementations = {
     "XGate": cirq.X,
     "CXGate": cirq.CX,
     "CCXGate": cirq.CCX,
+    "CCZGate": cirq.CCZ,
     "CSdgGate": cirq.ControlledGate(cirq.S ** (-1), num_controls=1),
     "SXdgGate": cirq.X ** (-1 / 2),
     "SXGate": cirq.X**0.5,
