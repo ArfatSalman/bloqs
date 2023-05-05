@@ -69,11 +69,12 @@ def pyquil_unitary_using_bloqs(gate_name, qubit_size, param_args):
 
 gates = list(all_gates)
 
+
 @pytest.mark.parametrize("gate_name", gates)
 def test_cirq_gate(gate_name):
     fn_args = list(getattr(QiskitGates, gate_name).__init__.__code__.co_varnames)
 
-    for name in ["self", "label", "ctrl_state", "basis", 'OneQubitEulerDecomposer']:
+    for name in ["self", "label", "ctrl_state", "basis", "OneQubitEulerDecomposer"]:
         if name in fn_args:
             fn_args.remove(name)
 
@@ -91,25 +92,36 @@ def test_cirq_gate(gate_name):
         unit_q, unit_c
     )
 
-pyquil_skipped_gates = [
-    "SXGate",
+
+non_param_one_qubit_gates = ["SXGate", "SXdgGate"]
+
+non_param_two_qubit_gates = ["CSXGate", "ECRGate"]
+
+three_param_one_qubit_gates = [
+    "UGate",
+    "U3Gate",
+]
+
+two_param_one_qubit_gates = ["RGate", "U2Gate"]
+
+tested_by_statevector = (
+    two_param_one_qubit_gates
+    + non_param_one_qubit_gates
+    + non_param_two_qubit_gates
+    + three_param_one_qubit_gates
+)
+
+pyquil_skipped_gates = tested_by_statevector + [
     "RZZGate",
     "RVGate",
     "C3SXGate",
     "RC3XGate",
-    "ECRGate",
     "CU3Gate",
-    "SXdgGate",
-    "CSXGate",
     "RCCXGate",
     "RZXGate",
     "CUGate",
     "RYYGate",
-    "U2Gate",
-    "U3Gate",
     "RXXGate",
-    "UGate",
-    "RGate",
 ]
 
 pyquil_gates = [gate for gate in gates if gate not in pyquil_skipped_gates]
