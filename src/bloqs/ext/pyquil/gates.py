@@ -262,6 +262,12 @@ def get_custom_get_definitions(*args):
     res = []
     args = set(args)
 
+    r_gate = {"RGate"}
+    if len(set.intersection(r_gate, args)) > 0:
+        res.append(defns["UGate"])
+
+        args.difference_update(r_gate)
+
     sx_group = {"SXGate", "CSXGate", "SXdgGate", "C3SXGate"}
     if len(set.intersection(sx_group, args)) > 0:
         res.append(defns["SXGate"])

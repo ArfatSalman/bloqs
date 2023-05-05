@@ -4,15 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "bloqs"
-version = "0.0.1"
+version = "0.0.2"
 authors = [
   { name="Arfat Salman", email="giney.paradise@gmail.com" },
 ]
-description = "A small example package"
+description = "A small utility library for Qiskit quantum gates in Cirq and pyQuil"
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
-  'cirq'
+  'cirq',
+  'pyquil'
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
